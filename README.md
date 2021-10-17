@@ -22,29 +22,6 @@ as the buffer size for the read calls in your get_next_line.
 Make sure that your function behaves well when it reads from a file and when it
 reads from the standard input.
 
- :point_right: Locate in the **42-silicon-valley-libft/test** folder.
-
-**GNL with files**
-```bash
-gcc tests/main.c -Wall -Wextra -Werror -D BUFFER_SIZE=32 get_next_line.c get_next_line_utils.c
-
-./a.out files/part1_test01_with_lines
-```
-
-**GNL with standard input (stdin)**
-```bash
-gcc tests/main_stdin.c -Wall -Wextra -Werror -D BUFFER_SIZE=32 get_next_line.c get_next_line_utils.c
-
-./a.out
-```
-
-**GNL Bonus Part**
-```bash
-gcc tests/main_bonus.c -g -Wall -Wextra -Werror -D BUFFER_SIZE=1 get_next_line_bonus.c get_next_line_utils_bonus.c
-
-./a.out
-```
-
 ## Points to understand in GNL
 
 According to our GNL subject *Calling your function get_next_line in a loop will then allow you to read the text
