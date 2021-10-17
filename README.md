@@ -1,4 +1,4 @@
-# Get Next Line (GNL)  :tractor:
+# Get Next Line (GNL)  :books:
 
 
 The aim of this project is to make you code a function that **returns a line
@@ -84,7 +84,7 @@ ssize_t read(int fd, void *buf, size_t count);
 - **void buf** pointer to buffer to store characters read by the read function
 - **size_t count** maximum number of characters to read
 
-**:traffic_light: Note.:** a character is equivalent to a 1 byte and a byte is made up of 8 bits therefore a character is made up of 8 bits (1 byte)
+**:heavy_exclamation_mark: Note.:** a character is equivalent to a 1 byte and a byte is made up of 8 bits therefore a character is made up of 8 bits (1 byte)
 
 We can do something like this to read 20 bytes or 20 characters:
 ```c
@@ -92,7 +92,7 @@ char buffer[20];
 read(fd, buffer, 20);
 ```
 
-**:traffic_light: Note.:** remember read() doesn't add '\0' to terminate to make it string (just gives raw buffer).
+**:heavy_exclamation_mark: Note.:** remember read() doesn't add '\0' to terminate to make it string (just gives raw buffer).
 
 
 ### Functions Used
@@ -101,9 +101,9 @@ read(fd, buffer, 20);
 
   | Function | Description         |
  |-----------|----------------------|
- |  read() | A line has been read |
- |  malloc() | EOF has been reached |
- |  free() | An error happened |
+ |  read() | read() attempts to read up to count bytes from file descriptor fd into the buffer starting at buf. |
+ |  malloc() | The malloc() function allocates size bytes and returns a pointer to the allocated memory. |
+ |  free() | The free() function shall cause the space pointed to by ptr to be deallocated; that is, made available for further allocation. |
 
 **Utility Functions**
 
@@ -117,21 +117,6 @@ read(fd, buffer, 20);
  |  ft_substr | Allocates with malloc and returns a substring from the string 's'. |
  |  ft_strlen |  Calculates the length of the string s, excluding the terminating null byte ('\0') |
 
-
-## Testers
-
-### 42TESTERS-GNL
-**Author:** Mazoise
-
- :point_right: Locate in the **42-silicon-valley-gnl** folder
-
-```bash
-git clone https://github.com/Mazoise/42TESTERS-GNL.git
-cd 42TESTERS-GNL
-./all_tests.sh
-./all_tests_with_bonus.sh
-```
-
 ### VALGRIND
 
 **Installation**
@@ -139,50 +124,7 @@ cd 42TESTERS-GNL
 sudo apt-get update -y
 sudo apt-get install -y valgrind
 ```
-**How to Use?**
-```bash
-gcc tests/main.c -g -Wall -Wextra -Werror -D BUFFER_SIZE=32 get_next_line.c get_next_line_utils.c
-
-valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes ./a.out files/part1_test01_with_lines
-```
-![alt text](img/valgrind_output.png)
-
 **:information_source:** [ know more about valgrind ](https://valgrind.org/docs/manual/quick-start.html)
-
-### FSANITIZE
-
-```bash
-gcc tests/main.c -g3 -fsanitize=address -Wall -Wextra -Werror -D BUFFER_SIZE=32 get_next_line.c get_next_line_utils.c -I
-
-./a.out files/part1_test01_with_lines
-```
-![alt text](img/fsanitize_output.png)
-
-## Other testers
-
-[ GNL_lover ](https://github.com/charMstr/GNL_lover.git)   from *charMstr*
-
-[ gnlkiller ](https://github.com/DontBreakAlex/gnlkiller.git)   from  *DontBreakAlex*
-
-[ gnlkiller2 ](https://github.com/Sherchryst/gnlkiller.git)   from *Sherchryst*
-
-## Debug with lldb and GUI
-```bash
-gcc -g tests/main.c -Wall -Wextra -Werror -D BUFFER_SIZE=1 get_next_line.c get_next_line_utils.c
-lldb a.out
-b get_next_line
-run files/part1_test01_with_lines
-gui
-```
-**:flashlight: keys to move**
-
-- **tab** : change window
-- **s** : next line
-- **directional key** : variables navigation
-- **h** : help
-
-![alt text](img/lldb_gui.png)
-
 
 ## Norminette
 
@@ -194,9 +136,4 @@ Use and install this repository:
 norminette *.*
 ```
 
-## Graded by Moulinette
-![alt text](img/graded_by_moulinete.png)
-
-### GNL pdf  new curriculum
-[Download from HERE](https://drive.google.com/file/d/1Dg5NWIZD0WmaiNZEp0-DjIkD22Og3e4A/view?usp=sharing)
  
