@@ -5,122 +5,111 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: avitolin <avitolin@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/04 14:29:32 by avitolin          #+#    #+#             */
-/*   Updated: 2021/10/16 14:29:21 by avitolin         ###   ########.fr       */
+/*   Created: 2021/10/27 12:52:56 by avitolin          #+#    #+#             */
+/*   Updated: 2021/10/30 05:11:20 by avitolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+
 /*
-**	Description: Write a function which returns
-**	a line read from a file descriptor, without the newline.
-**	Parameters:
-**	1. file descriptor for reading
-**	2. The value of what has been read
-**		Return value:
-**	1 : A line has been read
-**	0 : EOF has been reached
-**	-1 : An error happened
+**		FUNCTION NAME:
+**	get_next_line
+**
+**		PROTOTYPE:
+**	char *get_next_line(int fd);
+**
+**		TURN IN FILES:
+**	get_next_line.c, get_next_line_utils.c, get_next_line.h
+**
+**		PAREMETERS:
+**	File descriptor to read from
+**
+**		RETURN VALUE:
+**	Read line: correct behavior
+**	NULL: nothing else to read or an error occurred
+**
+**		EXTERNAL FUNCTIONS:
+**	read, malloc, free
+**
+**		DESCRIPTION:
+**	Write a function which returns a line read from a file descriptor
 */
 
-char	*ft_strdup(const char *str)
+static void ft_free_pointer(char **ptr)
 {
-	char	*new;
-	ssize_t	i;
-
-	new = ft_strnew(ft_strlen(str));
-	if (new == NULL)
-		return (NULL);
-	i = -1;
-	while (str[++i])
-		new[i] = str[i];
-	return (new);
+	free(*ptr);
+	*ptr = NULL;
 }
 
-char	*ft_strchr(const char *s, int c)
+static char *ft_get_line(char **back, char **line)
 {
+	char *new_backup;
 	int i;
 
 	i = 0;
-	while (s[i] != (char)c)
-		if (!s[i++])
-			return (NULL);
-	return ((char *)&s[i]);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*ptr;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	if (s1 == NULL || s2 == NULL || !(ptr = (char *)malloc(ft_strlen(s1)
-		+ ft_strlen(s2) + 1)))
-		return (NULL);
-	while (s1[i] != '\0')
-	{
-		ptr[i] = s1[i];
+	new_backup = NULL;
+	while (*(*back + i) != '\n' && *(*back +i) != '\0')
 		i++;
-	}
-	while (s2[j] != '\0')
+	if (*(*back + i) == '\n')
 	{
-		ptr[i] = s2[j];
 		i++;
-		j++;
+		*line = ft_substr(*back, 0, i);
+		new_backup = ft_strdup(*back + i);
 	}
-	ptr[i] = '\0';
-	return (ptr);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	char	*ptr;
-
-	i = 0;
-	if (!s || (long int)len < 0)
-		return (NULL);
-	ptr = (char *)malloc(len + 1);
-	if (ptr == NULL)
-		return (NULL);
-	while (start < ft_strlen(s) && i < len)
-	{
-		ptr[i] = s[start];
-		i++;
-		start++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
-}
-
-int		get_next_line(int fd, char **line)
-{
-	ssize_t		r;
-	char		bf[BUFFER_SIZE + (r = 1)];
-	static char	*c_line = NULL;
-	char		*tmp;
-
-	if (fd < 0 || !line || BUFFER_SIZE <= 0)
-		return (-1);
-	c_line == NULL ? c_line = ft_strnew(0) : NULL;
-	while (!ft_strchr(c_line, '\n') && (r = read(fd, bf, BUFFER_SIZE)) > 0)
-	{
-		bf[r] = '\0';
-		tmp = ft_strjoin(c_line, bf);
-		ft_memdel((void **)&c_line);
-		c_line = tmp;
-	}
-	if (r == 0)
-		*line = ft_strdup(c_line);
-	else if (r > 0)
-		*line = ft_substr(c_line, 0, (ft_strchr(c_line, '\n') - c_line));
 	else
-		return (-1);
-	tmp = ft_strdup(c_line + (ft_strlen(*line) + ((r > 0) ? +1 : +0)));
-	ft_memdel((void **)&c_line);
-	c_line = tmp;
-	return (r == 0 ? 0 * ft_memdel((void **)&c_line) : 1);
+		*line = ft_strdup(*back);
+	ft_free_pointer(back);
+	return (new_backup);
+}
+
+static int ft_read_line(int fd, char **buff, char **back, char **line)
+{
+	int bytes_read;
+	char *temp_ptr;
+
+
+printf("DEBUG ft read line \n");
+
+	bytes_read = 1;
+	while (!ft_strchr(*back, '\n') && bytes_read)
+	{
+		bytes_read = read(fd, *buff, BUFFER_SIZE);
+		*buff[bytes_read] = '\0';
+		temp_ptr = *back;
+		*back = ft_strjoin(temp_ptr, *buff);
+		free (temp_ptr);
+	}
+	ft_free_pointer(buff);
+	*back = ft_get_line(back, line);
+	if (!(**line))
+		ft_free_pointer(line);
+	return (bytes_read);
+}
+
+char *get_next_line(int fd)
+{
+	static char	*buffer_backup = NULL;
+	char		*buffer;
+	char		*line;
+
+printf("DEBUG START \n");
+printf("ft_get_next_line \n");
+
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 1024)
+		return(NULL);
+	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (NULL);
+	if (read(fd , buffer, 0) < 0)
+	{
+		free (buffer);
+		return (NULL);
+	}
+	if (!buffer_backup)
+		buffer_backup = ft_strdup("");
+	if (!ft_read_line(fd, &buffer, &buffer_backup, &line) && !line)
+		return (NULL);
+	return (line);
 }
