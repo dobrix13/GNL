@@ -4,6 +4,7 @@
 	*bonus
 	*update readme
 	*norm errors
+	*remoove debug lines
 
 
 The aim of this project is to make you code a function that **returns a line
