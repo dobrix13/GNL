@@ -61,18 +61,12 @@ int main()
 
 ```
 
-This next line will return an integer that will be used as a parameter for the **get_next_line** function.
-```c
-fd = open(argv[1], O_RDONLY);
-```
-**get_next_line** function will return an **integer** that will be taken to evaluate all the lines until the file ends.
-
 ### Return value
  | Value | Description         |
  |-----------|----------------------|
- |  1| A line has been read |
- |  0| EOF has been reached |
- |  -1| An error happened |
+ |  line | A line has been read |
+ |  NULL | EOF has been reached |
+ | ------| -------------------- |
 
 ### READ() function
 
