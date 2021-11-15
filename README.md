@@ -16,7 +16,7 @@ but it will also allow you to learn a highly interesting new concept in C progra
 
 ### Function Prototype
 ```c
-int	get_next_line(int fd, char **line);
+int	get_next_line(int fd);
 ```
 ## Compilation
 
@@ -36,34 +36,29 @@ available on a file descriptor one line at a time until the EOF*
 Call GNL from the main
 
 ```c
-int main(int argc, char **argv)
+int main()
 {
-	int fd, ret, line_count;
 	char *line;
+	int fd;
+	int i;
 
-	line_count = 1;
-	ret = 0;
-	line = NULL;
-	if (argc == 2)
+	i = 0;
+	fd = open("./test/file", O_RDONLY);
+	system("clear");
+	while (1)
 	{
-		fd = open(argv[1], O_RDONLY);
-		while ((ret = get_next_line(fd, &line)) > 0)
-		{
-			printf(" \n [ Return: %d ] | A line has been read #%d => %s\n", ret, line_count, line);
-			line_count++;
-			free(line);
-		}
-		printf(" \n [ Return: %d ] A line has been read #%d: %s\n", ret, line_count++, line);
-		printf("\n");
-		if (ret == -1)
-			printf("-----------\n An error happened\n");
-		else if (ret == 0)
-		{
-			printf("-----------\n EOF has been reached\n");
-			free(line);
-		}
-		close(fd);
+		line = get_next_line(fd);
+		if(line == NULL)
+			break;
+		printf("result %d: %s",i + 1 ,line);
+		i++;
 	}
+	printf("EOF\n");
+	close(fd);
+	free(line);
+	return (0);
+}
+
 ```
 
 This next line will return an integer that will be used as a parameter for the **get_next_line** function.
