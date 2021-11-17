@@ -6,7 +6,7 @@
 /*   By: avitolin <avitolin@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:28:21 by avitolin          #+#    #+#             */
-/*   Updated: 2021/11/17 00:21:03 by avitolin         ###   ########.fr       */
+/*   Updated: 2021/11/17 01:32:28 by avitolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*gnl_linejoin(char *temp_line, char *buffer)
 			line[i] = temp_line[i];
 	while (buffer[j] != '\0')
 		line[i++] = buffer[j++];
-	line[++i] = '\0';
+	line[i] = '\0';
 	free(temp_line);
 	return (line);
 	free(line);
