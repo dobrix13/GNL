@@ -6,7 +6,7 @@
 /*   By: avitolin <avitolin@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:28:21 by avitolin          #+#    #+#             */
-/*   Updated: 2021/11/17 01:45:13 by avitolin         ###   ########.fr       */
+/*   Updated: 2021/11/17 02:15:39 by avitolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ char	*gnl_linejoin(char *temp_line, char *buffer)
 	}
 	if (!temp_line || !buffer)
 		return (NULL);
-	line = malloc(sizeof(char) * ((ft_strlen(temp_line)+ ft_strlen(buffer)) + 1));
+	line = malloc(sizeof(char) * ((ft_strlen(temp_line) + ft_strlen(buffer)) \
+	+ 1));
 	if (!line)
 		return (NULL);
 	if (temp_line)
-		while(temp_line[++i] != '\0')
+		while (temp_line[++i] != '\0')
 			line[i] = temp_line[i];
 	while (buffer[j] != '\0')
 		line[i++] = buffer[j++];
 	line[i] = '\0';
 	free(temp_line);
 	return (line);
-	free(line);
 }
 
 char	*gnl_get_line(char *temp_line)
@@ -100,7 +100,7 @@ char	*gnl_get_line(char *temp_line)
 	return (line);
 }
 
-char *gnl_read_on(char *temp_line)
+char	*gnl_read_on(char *temp_line)
 {
 	int		i;
 	int		j;
@@ -108,7 +108,7 @@ char *gnl_read_on(char *temp_line)
 
 	i = 0;
 	j = 0;
-	while(temp_line[i] != '\n' && temp_line[i])
+	while (temp_line[i] != '\n' && temp_line[i])
 		i++;
 	if (!temp_line[i])
 	{
@@ -119,7 +119,7 @@ char *gnl_read_on(char *temp_line)
 	if (!line)
 		return (NULL);
 	i++;
-	while(temp_line[i])
+	while (temp_line[i])
 		line[j++] = temp_line[i++];
 	line[j] = '\0';
 	free (temp_line);

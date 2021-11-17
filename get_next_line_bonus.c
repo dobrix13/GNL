@@ -6,7 +6,7 @@
 /*   By: avitolin <avitolin@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 23:11:07 by avitolin          #+#    #+#             */
-/*   Updated: 2021/11/16 22:36:35 by avitolin         ###   ########.fr       */
+/*   Updated: 2021/11/17 02:07:00 by avitolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ char	*gnl_read_to_tmp(int fd, char *temp_line)
 
 char	*get_next_line(int fd)
 {
-	char *line;
-	static char *temp_line[1024];
+	char			*line;
+	static char		*temp_line[1024];
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
