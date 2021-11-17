@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avitolin <avitolin@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 14:28:21 by avitolin          #+#    #+#             */
-/*   Updated: 2021/11/17 00:32:26 by avitolin         ###   ########.fr       */
+/*   Updated: 2021/11/17 00:21:03 by avitolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*gnl_linejoin(char *temp_line, char *buffer)
 	line[++i] = '\0';
 	free(temp_line);
 	return (line);
-	//free(line);
+	free(line);
 }
 
 char	*gnl_get_line(char *temp_line)
@@ -122,8 +122,7 @@ char *gnl_read_on(char *temp_line)
 	while(temp_line[i])
 		line[j++] = temp_line[i++];
 	line[j] = '\0';
-	if(1)
-		free (temp_line);
+	free (temp_line);
 	return (line);
 	free(line);
 }

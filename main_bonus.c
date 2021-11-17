@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avitolin <avitolin@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 10:49:28 by avitolin          #+#    #+#             */
-/*   Updated: 2021/11/17 00:29:47 by avitolin         ###   ########.fr       */
+/*   Updated: 2021/11/17 00:19:34 by avitolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,27 @@
 int	main(void)
 {
 	char	*line;
-	int		fd;
 	int		i;
+	int		fd1;
+	int		fd2;
 
-	i = 0;
-	fd = open("./test/file_2", O_RDONLY);
-	system("clear");
-	while (1)
+	fd1 = open("./test/file_1", O_RDONLY);
+	fd2 = open("./test/file_2", O_RDONLY);
+	i = 1;
+	while (i)
 	{
-		line = get_next_line(fd);
-		if (line == NULL)
-			break ;
-		printf("result %d: %s", i + 1, line);
-		i++;
+		i = 0;
+		line = get_next_line(fd1);
+		if (line != NULL)
+			i = printf("line [%02d]: %s", i, line);
+		free(line);
+		line = get_next_line(fd2);
+		if (line != NULL)
+			i = printf("line [%02d]: %s", i, line);
+		free(line);
 	}
-	close(fd);
-	printf("EOF: ===== BUFFER_SIZE = %d\n", BUFFER_SIZE);
+	printf("End Of all Files reached. ===BUFFER_SIZE = %d\n", BUFFER_SIZE);
+	close(fd1);
+	close(fd2);
 	return (0);
 }
